@@ -1,0 +1,8 @@
+﻿  ScenePlanning.cpp
+c:\users\earnau\desktop\sdl_decisions\src\node.h(18): warning C4018: '<': signed/unsigned mismatch
+c:\users\earnau\desktop\sdl_decisions\src\sceneplanning.cpp(286): warning C4018: '<': signed/unsigned mismatch
+c:\users\earnau\desktop\sdl_decisions\src\sceneplanning.cpp(287): warning C4018: '<': signed/unsigned mismatch
+c:\users\earnau\desktop\sdl_decisions\src\sceneplanning.cpp(296): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\earnau\desktop\sdl_decisions\src\sceneplanning.cpp(296): warning C4244: 'argument': conversion from 'const int' to 'const float', possible loss of data
+  SDL_Planning.vcxproj -> C:\Users\earnau\Desktop\SDL_Decisions\\bin\SDL_Planning.exe
+  SDL_Planning.vcxproj -> C:\Users\earnau\Desktop\SDL_Decisions\\bin\SDL_Planning.pdb (Partial PDB)
