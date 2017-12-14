@@ -26,6 +26,7 @@
 */
 //We're going to use the function pointer style and not the macro style defined above
 
+enum nextState { Saloon, Mine, Home, Bank };
 
 class Agent
 {
@@ -33,6 +34,7 @@ class Agent
 	friend class State;
 
 private:
+
 	SteeringBehavior *steering_behavior;
 	Vector2D position;
 	Vector2D velocity;
@@ -51,7 +53,7 @@ private:
 	int sprite_w;
 	int sprite_h;
 
-
+public:
 	int coins;
 	int max_coins;
 	int total_coins;
@@ -59,9 +61,9 @@ private:
 	float limit_tiredness;
 	float thirst;
 	float limit_thirst;
+	State* actualState;
 
 
-public:
 	Agent();
 	~Agent();
 	SteeringBehavior *Behavior();
@@ -80,6 +82,7 @@ public:
 	Path FindPath(const std::vector<Node*>&, const Vector2D&, const Vector2D&);
 	float Heuristic(Node*, Node*);
 	void Think();
+	void ChangeState(nextState);
 };
 
 class CompareDist

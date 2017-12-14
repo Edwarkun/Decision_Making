@@ -79,7 +79,7 @@ void Agent::setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a)
 
 void Agent::update(Vector2D steering_force, float dtime, SDL_Event *event)
 {
-
+	actualState->Update(this);
 	//cout << "agent update:" << endl;
 
 	switch (event->type) {
@@ -91,7 +91,6 @@ void Agent::update(Vector2D steering_force, float dtime, SDL_Event *event)
 	default:
 		break;
 	}
-
 
 	Vector2D acceleration = steering_force / mass;
 	velocity = velocity + acceleration * dtime;
@@ -231,4 +230,16 @@ float Agent::Heuristic(Node* fromN, Node* toN) {
 }
 void Agent::Think() {
 
+}
+void Agent::ChangeState(nextState _nextState){
+	switch (_nextState) {
+	case Saloon:
+		break;
+	case Mine:
+		break;
+	case Bank:
+		break;
+	case Home:
+		break;
+	}
 }
