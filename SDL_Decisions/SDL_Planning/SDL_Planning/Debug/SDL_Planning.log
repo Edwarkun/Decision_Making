@@ -1,36 +1,8 @@
-﻿  Home.cpp
-d:\decision_making\sdl_decisions\src\node.h(18): warning C4018: '<': signed/unsigned mismatch
-d:\decision_making\sdl_decisions\src\home.cpp(18): error C2065: 'Saloon': undeclared identifier
-d:\decision_making\sdl_decisions\src\home.cpp(22): error C2660: 'Agent::ChangeState': function does not take 0 arguments
-  Agent.cpp
-d:\decision_making\sdl_decisions\src\node.h(18): warning C4018: '<': signed/unsigned mismatch
-d:\decision_making\sdl_decisions\src\agent.cpp(165): warning C4018: '<': signed/unsigned mismatch
-d:\decision_making\sdl_decisions\src\agent.cpp(204): warning C4018: '<': signed/unsigned mismatch
-d:\decision_making\sdl_decisions\src\agent.cpp(208): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-d:\decision_making\sdl_decisions\src\agent.cpp(218): warning C4018: '<': signed/unsigned mismatch
-d:\decision_making\sdl_decisions\src\agent.cpp(236): error C2059: syntax error: ':'
-d:\decision_making\sdl_decisions\src\agent.cpp(238): warning C4060: switch statement contains no 'case' or 'default' labels
-  Generating Code...
-  Compiling...
-  Bank.cpp
-d:\decision_making\sdl_decisions\src\node.h(18): warning C4018: '<': signed/unsigned mismatch
-  Generating Code...
-  Compiling...
-  main.cpp
-d:\decision_making\sdl_decisions\src\node.h(18): warning C4018: '<': signed/unsigned mismatch
-  SteeringBehavior.cpp
-d:\decision_making\sdl_decisions\src\node.h(18): warning C4018: '<': signed/unsigned mismatch
-d:\decision_making\sdl_decisions\src\state.h(11): error C2061: syntax error: identifier 'Agent'
-d:\decision_making\sdl_decisions\src\state.h(12): error C2061: syntax error: identifier 'Agent'
-d:\decision_making\sdl_decisions\src\state.h(13): error C2061: syntax error: identifier 'Agent'
-  ScenePlanning.cpp
-d:\decision_making\sdl_decisions\src\node.h(18): warning C4018: '<': signed/unsigned mismatch
-d:\decision_making\sdl_decisions\src\sceneplanning.cpp(286): warning C4018: '<': signed/unsigned mismatch
-d:\decision_making\sdl_decisions\src\sceneplanning.cpp(287): warning C4018: '<': signed/unsigned mismatch
-d:\decision_making\sdl_decisions\src\sceneplanning.cpp(296): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\decision_making\sdl_decisions\src\sceneplanning.cpp(296): warning C4244: 'argument': conversion from 'const int' to 'const float', possible loss of data
-  Saloon.cpp
-d:\decision_making\sdl_decisions\src\node.h(18): warning C4018: '<': signed/unsigned mismatch
-  Mine.cpp
-d:\decision_making\sdl_decisions\src\node.h(18): warning C4018: '<': signed/unsigned mismatch
-  Generating Code...
+﻿  ScenePlanning.cpp
+c:\users\usuario\source\repos\decision_making2\sdl_decisions\src\node.h(18): warning C4018: '<': signed/unsigned mismatch
+c:\users\usuario\source\repos\decision_making2\sdl_decisions\src\sceneplanning.cpp(332): warning C4018: '<': signed/unsigned mismatch
+c:\users\usuario\source\repos\decision_making2\sdl_decisions\src\sceneplanning.cpp(333): warning C4018: '<': signed/unsigned mismatch
+c:\users\usuario\source\repos\decision_making2\sdl_decisions\src\sceneplanning.cpp(342): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\usuario\source\repos\decision_making2\sdl_decisions\src\sceneplanning.cpp(342): warning C4244: 'argument': conversion from 'const int' to 'const float', possible loss of data
+  SDL_Planning.vcxproj -> C:\Users\Usuario\Source\Repos\Decision_Making2\SDL_Decisions\\bin\SDL_Planning.exe
+  SDL_Planning.vcxproj -> C:\Users\Usuario\Source\Repos\Decision_Making2\SDL_Decisions\\bin\SDL_Planning.pdb (Partial PDB)

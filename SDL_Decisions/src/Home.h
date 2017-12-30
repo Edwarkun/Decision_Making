@@ -3,12 +3,9 @@
 
 class Home : public State {
 public:
-	static State* stateInstance;
-	Vector2D HomeVector;
+	static State* instance;
 	Home();
-private:
-	static State* Instance();
-	void Enter(Agent* agent, std::vector<Node*> grid);
-	void Update(Agent* agent);
-	void Exit(Agent* agent);
+	void Enter(Agent*);
+	void Update(Agent*, float);
+	void Exit(Agent*);
 };

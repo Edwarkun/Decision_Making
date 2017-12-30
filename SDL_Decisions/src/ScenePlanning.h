@@ -5,6 +5,7 @@
 #include "Agent.h"
 #include "Path.h"
 #include "Node.h"
+#include "Text.h"
 
 class ScenePlanning :
 	public Scene
@@ -39,6 +40,11 @@ private:
 	void CreateGrid(const std::vector<std::vector<int>>&);
 
 	std::vector<Node*> grid;
+	Text* thirst;
+	Text* coins;
+	Text* tired;
+	Text* totalCoins;
+	Text* agentState;
 
 	Path mine_home, mine_saloon, mine_bank;
 	Path home_mine, home_saloon, home_bank;

@@ -1,22 +1,37 @@
 #include "Agent.h"
-
+#include "State.h"
+#include "Mine.h"
+#include "Saloon.h"
+#include "Home.h"
+#include "Bank.h"
 using namespace std;
 
 Agent::Agent() : sprite_texture(0),
-                 position(Vector2D(100, 100)),
-	             target(Vector2D(1000, 100)),
-	             velocity(Vector2D(0,0)),
-	             mass(0.1f),
-	             max_force(150),
-	             max_velocity(200),
-	             orientation(0),
-	             color({ 255,255,255,255 }),
-				 sprite_num_frames(0),
-	             sprite_w(0),
-	             sprite_h(0),
-	             draw_sprite(false)
+	position(Vector2D(100, 100)),
+	target(Vector2D(1000, 100)),
+	velocity(Vector2D(0, 0)),
+	mass(0.1f),
+	max_force(150),
+	max_velocity(200),
+	orientation(0),
+	color({ 255,255,255,255 }),
+	sprite_num_frames(0),
+	sprite_w(0),
+	sprite_h(0),
+	draw_sprite(false),
+	drink_cost(3),
+	coins(0),
+	max_coins(3),
+	total_coins(0),
+	tiredness(0),
+	limit_tiredness(10),
+	thirst(0),
+	limit_thirst(10)
 {
 	steering_behavior = new SteeringBehavior;
+	actualState = Mine::instance;
+	SetGoldNuggetPosition(Vector2D(48 + (int)(rand() % 39) * 32, 48 + (int)(rand() % 5) * 32));
+	actualState->Enter(this);
 }
 
 Agent::~Agent()
@@ -79,7 +94,13 @@ void Agent::setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a)
 
 void Agent::update(Vector2D steering_force, float dtime, SDL_Event *event)
 {
-	actualState->Update(this);
+
+	if(actualState)
+		actualState->Update(this, dtime);
+	else {
+		Text test("No state defined", Vector2D(30, 30), TheApp::Instance()->getRenderer(), 20, false);
+		test.RenderText();
+	}
 	//cout << "agent update:" << endl;
 
 	switch (event->type) {
@@ -233,13 +254,33 @@ void Agent::Think() {
 }
 void Agent::ChangeState(nextState _nextState){
 	switch (_nextState) {
-	case Saloon:
+	case State_Saloon:
+		actualState->Exit(this);
+		actualState = Saloon::instance;
+		actualState->Enter(this);
 		break;
-	case Mine:
+	case State_Mine:
+		actualState->Exit(this);
+		actualState = Mine::instance;
+		actualState->Enter(this);
 		break;
-	case Bank:
+	case State_Bank:
+		actualState->Exit(this);
+		actualState = Bank::instance;
+		actualState->Enter(this);
 		break;
-	case Home:
+	case State_Home:
+		actualState->Exit(this);
+		actualState = Home::instance;
+		actualState->Enter(this);
 		break;
 	}
+}
+
+
+//This function down below is basically this -> cell2pix(pix2cell(agent.position));
+Vector2D Agent::GetCenteredPosition() {
+	int offset = CELL_SIZE / 2;
+	Vector2D Cposition((float)((int)position.x / CELL_SIZE), (float)((int)position.y / CELL_SIZE));
+	return Vector2D(Cposition.x*CELL_SIZE + offset, Cposition.y*CELL_SIZE + offset);
 }

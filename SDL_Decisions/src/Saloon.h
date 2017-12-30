@@ -3,9 +3,10 @@
 
 class Saloon : public State {
 public:
+	static State* instance;
+	float counter;
 	Saloon();
-private:
-	void Enter();
-	void Update();
-	void Exit();
+	void Enter(Agent*);
+	void Update(Agent*, float);
+	void Exit(Agent*);
 };

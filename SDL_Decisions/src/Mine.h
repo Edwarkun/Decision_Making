@@ -3,9 +3,9 @@
 
 class Mine : public State {
 public:
+	static State* instance;
 	Mine();
-private:
-	void Enter();
-	void Update();
-	void Exit();
+	void Enter(Agent*);
+	void Update(Agent*, float);
+	void Exit(Agent*);
 };

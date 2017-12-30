@@ -14,25 +14,27 @@ ScenePlanning::ScenePlanning()
 	srand((unsigned int)time(NULL));
 
 	Agent *agent = new Agent;
+	agent->SetGrid(grid);
 	agent->loadSpriteTexture("../res/soldier.png", 4);
 	agents.push_back(agent);
 
 
 	// set agent position coords to the center of a random cell
-	Vector2D rand_cell(-1,-1);
-	while (!isValidCell(rand_cell)) 
-		rand_cell = Vector2D((float)(rand() % num_cell_x), (float)(rand() % num_cell_y));
-	agents[0]->setPosition(cell2pix(rand_cell));
+	agents[0]->setPosition(cell2pix(Vector2D(35, 20)));
 
 	// set the coin in a random cell (but at least 3 cells far from the agent)
-	coinPosition = Vector2D(-1,-1);
-	while ((!isValidCell(coinPosition)) || (Vector2D::Distance(coinPosition, rand_cell)<3)) 
-		coinPosition = Vector2D((float)(rand() % num_cell_x), (float)(rand() % num_cell_y));
+	coinPosition = agents[0]->getTarget();
 	
 	// PathFollowing next Target
 	currentTarget = Vector2D(0, 0);
 	currentTargetIndex = -1;
 
+	thirst = new Text("Thist: " + std::to_string(agents[0]->thirst).substr(0, 5), Vector2D(48, 16 + 32 * 7), TheApp::Instance()->getRenderer(), 20, false);
+	coins = new Text("Coins: " + std::to_string(agents[0]->coins) + "/" + std::to_string(agents[0]->max_coins), Vector2D(48, 16 + 32 * 8), TheApp::Instance()->getRenderer(), 20, false);
+	totalCoins = new Text("Coins in bank: " + std::to_string(agents[0]->total_coins), Vector2D(48, 16 + 32 * 9), TheApp::Instance()->getRenderer(), 20, false);
+	tired = new Text("Tiredness: " + std::to_string(agents[0]->tiredness).substr(0, 5), Vector2D(48, 16 + 32 * 10), TheApp::Instance()->getRenderer(), 20, false);
+	agentState = new Text(agents[0]->stateNotification, Vector2D(30, 30), TheApp::Instance()->getRenderer(), 20, false);
+		//Text test("Heading to the Mine", Vector2D(30, 30), TheApp::Instance()->getRenderer(), 20, false);		
 }
 
 ScenePlanning::~ScenePlanning()
@@ -46,10 +48,18 @@ ScenePlanning::~ScenePlanning()
 	{
 		delete agents[i];
 	}
+	delete thirst;
+	delete coins;
+	delete tired;
+	delete totalCoins;
+	delete agentState;
 }
 
 void ScenePlanning::update(float dtime, SDL_Event *event)
 {
+	if (dtime > 60.f / 1000.f) {
+		dtime = 60.f / 1000.f;
+	}
 	/* Keyboard & Mouse events */
 	switch (event->type) {
 	case SDL_KEYDOWN:
@@ -58,7 +68,7 @@ void ScenePlanning::update(float dtime, SDL_Event *event)
 		break;
 	case SDL_MOUSEMOTION:
 	case SDL_MOUSEBUTTONDOWN:
-		if (event->button.button == SDL_BUTTON_LEFT)
+		/*if (event->button.button == SDL_BUTTON_LEFT)
 		{
 			Vector2D cell = pix2cell(Vector2D((float)(event->button.x), (float)(event->button.y)));
 			if (isValidCell(cell))
@@ -66,7 +76,7 @@ void ScenePlanning::update(float dtime, SDL_Event *event)
 				agents[0]->setTarget(cell2pix(cell));
 				path = agents[0]->FindPath(grid, cell2pix(pix2cell(agents[0]->getPosition())), agents[0]->getTarget());
 			}
-		}
+		}*/
 		break;
 	default:
 		break;
@@ -112,13 +122,43 @@ void ScenePlanning::update(float dtime, SDL_Event *event)
 	{
 		agents[0]->update(Vector2D(0,0), dtime, event);
 	}
+	if (Vector2D(agents[0]->getPosition() - agents[0]->getTarget()).Length() > 32 && path.points.size() == 0) {
+		path = agents[0]->FindPath(grid, cell2pix(pix2cell(agents[0]->getPosition())), agents[0]->getTarget());
+		coinPosition = agents[0]->getTarget();
+	}
+	thirst->SetText("Thist: " + std::to_string(agents[0]->thirst).substr(0, 5));
+	coins->SetText("Coins: " + std::to_string(agents[0]->coins) + "/" + std::to_string(agents[0]->max_coins));
+	tired->SetText("Tiredness: " + std::to_string(agents[0]->tiredness).substr(0, 5));
+	totalCoins->SetText("Coins in bank: " + std::to_string(agents[0]->total_coins));
+	agentState->SetText(agents[0]->stateNotification);
+
+	if (agents[0]->thirst > agents[0]->limit_thirst) {
+		thirst->SetTextColor(255, 125, 125);
+	}
+	else {
+		thirst->SetTextColor(255, 255, 255);
+	}
+
+	if (agents[0]->tiredness > agents[0]->limit_tiredness) {
+		tired->SetTextColor(255, 125, 125);
+	}
+	else {
+		tired->SetTextColor(255, 255, 255);
+	}
+
+	if (agents[0]->coins == agents[0]->max_coins) {
+		coins->SetTextColor(255, 255, 125);
+	}
+	else {
+		coins->SetTextColor(255, 255, 255);
+	}
+		
 }
 
 void ScenePlanning::draw()
 {
 	drawMaze();
 	drawCoin();
-
 
 	if (draw_grid)
 	{
@@ -139,6 +179,12 @@ void ScenePlanning::draw()
 		if (i > 0)
 			SDL_RenderDrawLine(TheApp::Instance()->getRenderer(), (int)(path.points[i - 1].x), (int)(path.points[i - 1].y), (int)(path.points[i].x), (int)(path.points[i].y));
 	}
+
+	thirst->RenderText();
+	tired->RenderText();
+	coins->RenderText();
+	totalCoins->RenderText();
+	agentState->RenderText();
 
 	draw_circle(TheApp::Instance()->getRenderer(), (int)currentTarget.x, (int)currentTarget.y, 15, 255, 0, 0, 255);
 
@@ -161,13 +207,13 @@ void ScenePlanning::drawMaze()
 	}
 	else
 	{
-		//SDL_RenderCopy(TheApp::Instance()->getRenderer(), background_texture, NULL, NULL );
+		SDL_RenderCopy(TheApp::Instance()->getRenderer(), background_texture, NULL, NULL );
 	}
 }
 
 void ScenePlanning::drawCoin()
 {
-	Vector2D coin_coords = cell2pix(coinPosition);
+	Vector2D coin_coords = agents[0]->GetGoldNuggetPosition();
 	int offset = CELL_SIZE / 2;
 	SDL_Rect dstrect = {(int)coin_coords.x-offset, (int)coin_coords.y - offset, CELL_SIZE, CELL_SIZE};
 	SDL_RenderCopy(TheApp::Instance()->getRenderer(), coin_texture, NULL, &dstrect);

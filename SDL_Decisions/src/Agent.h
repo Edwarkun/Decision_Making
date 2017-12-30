@@ -7,7 +7,7 @@
 #include "Vector2D.h"
 #include "utils.h"
 #include "SteeringBehavior.h"
-#include "State.h"
+
 #include "Path.h"
 #include "Node.h"
 #include <unordered_map>
@@ -26,8 +26,9 @@
 */
 //We're going to use the function pointer style and not the macro style defined above
 
-enum nextState { Saloon, Mine, Home, Bank };
+enum nextState { State_Saloon, State_Mine, State_Home, State_Bank };
 
+class State;
 class Agent
 {
 	friend class SteeringBehavior;
@@ -57,11 +58,15 @@ public:
 	int coins;
 	int max_coins;
 	int total_coins;
+	int drink_cost;
 	float tiredness;
 	float limit_tiredness;
 	float thirst;
 	float limit_thirst;
 	State* actualState;
+	std::vector<Node*> grid;
+	Vector2D goldNuggetPosition;
+	std::string stateNotification;
 
 
 	Agent();
@@ -83,6 +88,10 @@ public:
 	float Heuristic(Node*, Node*);
 	void Think();
 	void ChangeState(nextState);
+	void SetGrid(std::vector<Node*> newGrid) { grid = newGrid;}
+	Vector2D GetCenteredPosition();
+	void SetGoldNuggetPosition(Vector2D newPosition) { goldNuggetPosition = newPosition; }
+	Vector2D GetGoldNuggetPosition() { return goldNuggetPosition; }
 };
 
 class CompareDist
