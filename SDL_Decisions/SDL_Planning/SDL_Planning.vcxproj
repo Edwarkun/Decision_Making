@@ -137,6 +137,7 @@
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\Mine.cpp" />
     <ClCompile Include="..\src\Saloon.cpp" />
+    <ClCompile Include="..\src\SceneGOAP.cpp" />
     <ClCompile Include="..\src\ScenePlanning.cpp" />
     <ClCompile Include="..\src\SDL_SimpleApp.cpp" />
     <ClCompile Include="..\src\SteeringBehavior.cpp" />
@@ -148,8 +149,10 @@
     <ClInclude Include="..\src\Bank.h" />
     <ClInclude Include="..\src\Home.h" />
     <ClInclude Include="..\src\Mine.h" />
+    <ClInclude Include="..\src\Node.h" />
     <ClInclude Include="..\src\Path.h" />
     <ClInclude Include="..\src\Saloon.h" />
+    <ClInclude Include="..\src\SceneGOAP.h" />
     <ClInclude Include="..\src\ScenePlanning.h" />
     <ClInclude Include="..\src\State.h" />
     <ClInclude Include="..\src\SteeringBehavior.h" />

@@ -193,7 +193,7 @@ void ScenePlanning::draw()
 
 const char* ScenePlanning::getTitle()
 {
-	return "SDL Steering Behaviors :: PathFinding1 Demo";
+	return "El minero robusto como un roble";
 }
 
 void ScenePlanning::drawMaze()
