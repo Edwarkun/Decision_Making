@@ -64,7 +64,7 @@ public:
 	float thirst;
 	float limit_thirst;
 	State* actualState;
-	std::vector<Node*> grid;
+	std::vector<NodeGOAP*> grid;
 	Vector2D goldNuggetPosition;
 	std::string stateNotification;
 
@@ -84,11 +84,11 @@ public:
 	void update(Vector2D steering_force, float dtime, SDL_Event *event);
 	void draw();
 	bool Agent::loadSpriteTexture(char* filename, int num_frames=1);
-	Path FindPath(const std::vector<Node*>&, const Vector2D&, const Vector2D&);
-	float Heuristic(Node*, Node*);
+	Path FindPath(const std::vector<NodeGOAP*>&, const Vector2D&, const Vector2D&);
+	float Heuristic(NodeGOAP*, NodeGOAP*);
 	void Think();
 	void ChangeState(nextState);
-	void SetGrid(std::vector<Node*> newGrid) { grid = newGrid;}
+	void SetGrid(std::vector<NodeGOAP*> newGrid) { grid = newGrid;}
 	Vector2D GetCenteredPosition();
 	void SetGoldNuggetPosition(Vector2D newPosition) { goldNuggetPosition = newPosition; }
 	Vector2D GetGoldNuggetPosition() { return goldNuggetPosition; }
@@ -97,7 +97,7 @@ public:
 class CompareDist
 {
 public:
-	bool operator()(std::pair<int, Node*> n1, std::pair<int, Node*> n2) {
+	bool operator()(std::pair<int, NodeGOAP*> n1, std::pair<int, NodeGOAP*> n2) {
 		return n1.first > n2.first;
 	}
 };

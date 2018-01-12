@@ -39,7 +39,7 @@ private:
 
 	void CreateGrid(const std::vector<std::vector<int>>&);
 
-	std::vector<Node*> grid;
+	std::vector<NodeGOAP*> grid;
 	Text* thirst;
 	Text* coins;
 	Text* tired;

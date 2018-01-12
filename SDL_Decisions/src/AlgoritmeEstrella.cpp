@@ -11,13 +11,13 @@ int goap::Planificador::Heuristica(const WorldState& now, const WorldState& goal
 	return now.distanceTo(goal);
 }
 
-void goap::Planificador::addToOpenList(Node&& n) {
+void goap::Planificador::addToOpenList(NodeGOAP&& n) {
 	//insert mantentin sort order
 	auto it = lower_bound(begin(open), end(open), n);
 	open.emplace(it, move(n));
 }
 
-goap::Node& goap::Planificador::popAndClose() {
+goap::NodeGOAP& goap::Planificador::popAndClose() {
 	assert(!open.empty());
 	closed.push_back(move(open.front()));
 	open.erase(open.begin());
@@ -26,15 +26,15 @@ goap::Node& goap::Planificador::popAndClose() {
 }
 
 bool goap::Planificador::pertanyTancada(const WorldState& ws) const {
-	if (find_if(begin(closed), end(closed), [&](const Node & n)
+	if (find_if(begin(closed), end(closed), [&](const NodeGOAP & n)
 	{return n.ws == ws; }) == end(closed)) {
 		return false;
 	}
 	return true;
 }
 
-vector<goap::Node>::iterator goap::Planificador::pertanyOberta(const WorldState& ws) {
-	return find_if(begin(open), end(open), [&](const Node & n) {return n.ws == ws; });
+vector<goap::NodeGOAP>::iterator goap::Planificador::pertanyOberta(const WorldState& ws) {
+	return find_if(begin(open), end(open), [&](const NodeGOAP & n) {return n.ws == ws; });
 }
 
 void goap::Planificador::printLlistaOberta()const {
@@ -57,20 +57,20 @@ vector<goap::Action>goap::Planificador::plan(const WorldState& start, const Worl
 	open.clear();
 	closed.clear();
 
-	Node startingNode(start, 0, Heuristica(start, goal), 0, nullptr);
+	NodeGOAP startingNode(start, 0, Heuristica(start, goal), 0, nullptr);
 
 	open.push_back(move(startingNode));
 
 	while (open.size() > 0) {
-		Node& current(popAndClose());//busca un node amb el menor cost
+		NodeGOAP& current(popAndClose());//busca un node amb el menor cost
 
 		if (current.ws.meetsGoal(goal)) {
 			vector<Action> thePlan;
 			do {
 				thePlan.push_back(*current.action);
-				auto itr = find_if(begin(open), end(open), [&](const Node & n) { return n.id == current.parentId; });
+				auto itr = find_if(begin(open), end(open), [&](const NodeGOAP & n) { return n.id == current.parentId; });
 				if (itr == end(open)) {
-					itr = find_if(begin(closed), end(closed), [&](const Node & n) { return n.id == current.parentId; });
+					itr = find_if(begin(closed), end(closed), [&](const NodeGOAP & n) { return n.id == current.parentId; });
 				}
 				current = *itr;
 			} while (current.parentId != 0);
@@ -92,7 +92,7 @@ vector<goap::Action>goap::Planificador::plan(const WorldState& start, const Worl
 				auto p_nextWS = pertanyOberta(nextWS);
 				if (p_nextWS == end(open)) {//no es membre de la llista obert
 					//fes un nou node, amb current com pare, recordint g i h
-					Node found(nextWS, current.g + i.getCost(), Heuristica(nextWS, goal), current.id, &i);
+					NodeGOAP found(nextWS, current.g + i.getCost(), Heuristica(nextWS, goal), current.id, &i);
 					//add a la llista oberta
 					addToOpenList(move(found));
 				}

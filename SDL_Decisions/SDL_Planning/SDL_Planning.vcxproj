@@ -131,11 +131,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\Accio.cpp" />
     <ClCompile Include="..\src\Agent.cpp" />
+    <ClCompile Include="..\src\AlgoritmeEstrella.cpp" />
     <ClCompile Include="..\src\Bank.cpp" />
     <ClCompile Include="..\src\Home.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\Mine.cpp" />
+    <ClCompile Include="..\src\NodeGOAP.cpp" />
     <ClCompile Include="..\src\Saloon.cpp" />
     <ClCompile Include="..\src\SceneGOAP.cpp" />
     <ClCompile Include="..\src\ScenePlanning.cpp" />
@@ -143,6 +146,7 @@
     <ClCompile Include="..\src\SteeringBehavior.cpp" />
     <ClCompile Include="..\src\Text.cpp" />
     <ClCompile Include="..\src\utils.cpp" />
+    <ClCompile Include="..\src\WorldState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Agent.h" />

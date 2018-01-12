@@ -176,10 +176,10 @@ bool Agent::loadSpriteTexture(char* filename, int _num_frames)
 
 	return true;
 }
-Path Agent::FindPath(const std::vector<Node*>& grid, const Vector2D& startPosition, const Vector2D& finishPosition) {
+Path Agent::FindPath(const std::vector<NodeGOAP*>& grid, const Vector2D& startPosition, const Vector2D& finishPosition) {
 	Path path;
-	Node* start = nullptr;
-	Node* finish = nullptr;
+	NodeGOAP* start = nullptr;
+	NodeGOAP* finish = nullptr;
 
 	bool startFound = false;
 	bool finishFound = false;
@@ -197,15 +197,15 @@ Path Agent::FindPath(const std::vector<Node*>& grid, const Vector2D& startPositi
 		return path;
 	}
 	//If the path was found we execute the A* algorithm
-	std::priority_queue<std::pair<int, Node*>, std::vector<std::pair<int, Node*>>, CompareDist> frontier;
-	std::unordered_map<Node*, Node*> cameFrom;
-	std::unordered_map<Node*, int> costSoFar;
+	std::priority_queue<std::pair<int, NodeGOAP*>, std::vector<std::pair<int, NodeGOAP*>>, CompareDist> frontier;
+	std::unordered_map<NodeGOAP*, NodeGOAP*> cameFrom;
+	std::unordered_map<NodeGOAP*, int> costSoFar;
 
 	frontier.emplace(std::make_pair(0, start));
 	cameFrom[start] = nullptr;
 	costSoFar[start] = 0;
 	while (frontier.size()) {
-		Node* current = frontier.top().second;
+		NodeGOAP* current = frontier.top().second;
 
 		if (current == finish) {
 			while (current != start) {
@@ -220,11 +220,11 @@ Path Agent::FindPath(const std::vector<Node*>& grid, const Vector2D& startPositi
 			return path;
 		}
 
-		std::vector<Node*> currentNB = current->GetNB();
-		std::vector<std::pair<float, Node*>> newNodes;
+		std::vector<NodeGOAP*> currentNB = current->GetNB();
+		std::vector<std::pair<float, NodeGOAP*>> newNodes;
 		for (int i = 0; i < currentNB.size(); i++) {
 
-			Node* next = currentNB[i];
+			NodeGOAP* next = currentNB[i];
 
 			int newCost = costSoFar[current] + next->GetCost();
 			if (costSoFar.find(next) == costSoFar.end() || newCost < costSoFar[next]) {
@@ -242,7 +242,7 @@ Path Agent::FindPath(const std::vector<Node*>& grid, const Vector2D& startPositi
 	}
 }
 
-float Agent::Heuristic(Node* fromN, Node* toN) {
+float Agent::Heuristic(NodeGOAP* fromN, NodeGOAP* toN) {
 	float a = abs(toN->GetPosition().x - fromN->GetPosition().x);
 	float b = abs(toN->GetPosition().y - fromN->GetPosition().y);
 	float distance = a + b;

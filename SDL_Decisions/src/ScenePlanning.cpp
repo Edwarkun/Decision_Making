@@ -327,7 +327,7 @@ void ScenePlanning::CreateGrid(const std::vector<std::vector<int>>& maze) {
 	int offset = CELL_SIZE / 2;
 	bool* leftWall = new bool[maze[0].size()];
 
-	std::queue<Node*> leftNodes;
+	std::queue<NodeGOAP*> leftNodes;
 	bool topWall = true;
 	for (int i = 0; i < maze.size(); i++) { // Columns
 		for (int j = 0; j < maze[i].size(); j++) { // Rows
@@ -339,7 +339,7 @@ void ScenePlanning::CreateGrid(const std::vector<std::vector<int>>& maze) {
 				leftWall[j] = true;
 			}
 			else {
-				Node* newNode = new Node(Vector2D(offset + i * CELL_SIZE, offset + j * CELL_SIZE), maze[i][j]);
+				NodeGOAP* newNode = new NodeGOAP(Vector2D(offset + i * CELL_SIZE, offset + j * CELL_SIZE), maze[i][j]);
 
 				if (leftWall[j]) { // if the left node was a wall we store the actual one it into a queue
 					leftWall[j] = false;

@@ -11,14 +11,14 @@ using namespace std;
 namespace goap {
 	class Planificador{
 	private:
-		vector<Node> open;//A* llista oberta
-		vector<Node> closed;//A* llista tancada
+		vector<NodeGOAP> open;//A* llista oberta
+		vector<NodeGOAP> closed;//A* llista tancada
 		
 		bool pertanyTancada(const WorldState& ws) const;//comprova si el worldState donat el conte algun node de la llista
-		vector<goap::Node>::iterator pertanyOberta(const WorldState& ws);
+		vector<goap::NodeGOAP>::iterator pertanyOberta(const WorldState& ws);
 
-		Node& popAndClose();//agafa el 1r node de open i la pasa a closed,retorna una refernciaaques node de close
-		void addToOpenList(Node&&);//mou un node donat (a rvalue reference)) dintre la llista oberta
+		NodeGOAP& popAndClose();//agafa el 1r node de open i la pasa a closed,retorna una refernciaaques node de close
+		void addToOpenList(NodeGOAP&&);//mou un node donat (a rvalue reference)) dintre la llista oberta
 
 		int Heuristica(const WorldState& now, const WorldState& goal)const;
 

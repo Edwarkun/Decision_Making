@@ -5,6 +5,15 @@
 #include "Text.h"
 #include "time.h"
 #include "SDL_SimpleApp.h"
+#include<iostream>
+#include"Accio.h"
+#include"WorldState.h"
+#include"AlgoritmeEstrella.h"
+//tambe shauria dincloure el .h amb lalgoritme, aqui el node no, ya que sinclou en la del algoritme tmb
+#include<vector>
+
+using namespace goap;
+using namespace std;
 
 class SceneGOAP : public Scene {
 public:
@@ -14,6 +23,7 @@ public:
 	void draw();
 	void drawProgressBar();
 	void swapActions();
+	void ExecuteGOAP();
 	const char* getTitle();
 	//Agent variables
 	bool agent_alive;
@@ -31,7 +41,7 @@ public:
 	float transitionTimer;
 	bool changingState;
 	int actualIndex;
-	std::vector<std::string> actions;
+	std::vector<std::string> actionNames;
 	std::vector<Text*> agentDataText;
 	Text* previousAction;
 	Text* actualAction;
