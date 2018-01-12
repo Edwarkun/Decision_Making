@@ -13,31 +13,31 @@ int main(void) {
 	vector<Action>actions;
 
 	//escribim els estats del mon
-	const int AgentViu = 5;
-	const int AgentTeArma = 10;
-	const int ArmaCarregada = 15;
-	const int AgentTeBomba = 20;
-	const int EnemicVisible = 25;
-	const int EnemicAlineat = 30;
-	const int EnemicViu = 35;
-	const int EnemicAprop = 40;
+	const int AgentViu = 1;
+	const int AgentTeArma = 2;
+	const int ArmaCarregada = 3;
+	const int AgentTeBomba = 4;
+	const int EnemicVisible = 5;
+	const int EnemicAlineat = 6;
+	const int EnemicViu = 7;
+	const int EnemicAprop = 8;
 	
-	//definim les accions, ve lo pepino
-	Action explorar("ExplorarEnemics", 5);
+	//accions
+	Action explorar("ExplorarEnemics",100);
 	explorar.setPrecondition(AgentViu, true);
 	explorar.setPrecondition(EnemicViu, true);
 	explorar.setPrecondition(EnemicVisible, false);
 	explorar.setEffect(EnemicVisible, true);
 	actions.push_back(explorar);
 
-	Action aproparse("AproparseToEnemic", 5);
+	Action aproparse("AproparseToEnemic", 150);
 	aproparse.setPrecondition(EnemicViu, true);
 	aproparse.setPrecondition(EnemicVisible, true);
 	aproparse.setPrecondition(EnemicAprop, false);
 	aproparse.setEffect(EnemicAprop, true);
 	actions.push_back(aproparse);
 
-	Action apuntar("Apuntar", 5);
+	Action apuntar("Apuntar", 20);
 	apuntar.setPrecondition(EnemicViu, true);
 	apuntar.setPrecondition(EnemicAprop, true);
 	apuntar.setPrecondition(AgentTeArma, true);
@@ -51,14 +51,14 @@ int main(void) {
 	disparar.setEffect(EnemicViu, false);
 	actions.push_back(disparar);
 
-	Action carregar("CarregarArma", 5);
+	Action carregar("CarregarArma", 30);
 	carregar.setPrecondition(AgentTeArma, true);
 	carregar.setPrecondition(AgentViu, true);
 	carregar.setPrecondition(ArmaCarregada, false);
 	carregar.setEffect(ArmaCarregada, true);
 	actions.push_back(carregar);
 
-	Action detonar("DetonarBomba", 5);
+	Action detonar("DetonarBomba", 100);
 	detonar.setPrecondition(AgentViu, true);
 	detonar.setPrecondition(AgentTeArma, false);
 	detonar.setPrecondition(AgentTeBomba, true);
@@ -91,15 +91,16 @@ int main(void) {
 
 	//estat final
 	WorldState estatObjectiu;
-	estatObjectiu.setVariablesMon(AgentViu, true);
+	/*estatObjectiu.setVariablesMon(AgentViu, true);
 	estatObjectiu.setVariablesMon(AgentTeArma, true);
 	estatObjectiu.setVariablesMon(ArmaCarregada, false);
 	estatObjectiu.setVariablesMon(AgentTeBomba, false);
 	estatObjectiu.setVariablesMon(EnemicVisible, true);
 	estatObjectiu.setVariablesMon(EnemicAlineat, true);
-	estatObjectiu.setVariablesMon(EnemicAprop, true);
+	estatObjectiu.setVariablesMon(EnemicAprop, true);*/
 	estatObjectiu.setVariablesMon(EnemicViu, false);
-	estatObjectiu.priority = 200;
+	estatObjectiu.setVariablesMon(EnemicAlineat, true);
+	estatObjectiu.priority = 50;
 
 
 	Planificador A;

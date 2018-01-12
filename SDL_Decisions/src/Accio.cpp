@@ -12,7 +12,7 @@ goap::Action::Action(string _name, int _cost) : Action(){
 
 bool goap::Action::operableOn(const WorldState& ws) const {
 	for (const auto& i : preconditions) {//iterador del tipus Const Action& que recorre les preconditions
-		try {
+		/*try {
 			if (ws.variablesMon.at(i.first) != i.second) {//si la key(ex.agentViu)de la precondicio !ESTROBA! en l'estat del mon actual
 				//el seu valor bool(true/false) no concorda amb el de la preocnidicio siginfica que no podrem realitzarla perque no es compleix
 				return false;//per tant no opera en aquest worldState
@@ -20,6 +20,10 @@ bool goap::Action::operableOn(const WorldState& ws) const {
 		}//tots els try requereix un controlador:catch
 		catch (const out_of_range&) {
 			return false;
+		}*/
+		if (ws.variablesMon.at(i.first) != i.second) {//si la key(ex.agentViu)de la precondicio !ESTROBA! en l'estat del mon actual
+													  //el seu valor bool(true/false) no concorda amb el de la preocnidicio siginfica que no podrem realitzarla perque no es compleix
+			return false;//per tant no opera en aquest worldState
 		}
 	}
 	return true;
