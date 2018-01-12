@@ -1,7 +1,5 @@
-#include "Node.h"
+#include "NodeGOAP.h"
 #include<iostream>
-
-using namespace std;
 
 int goap::Node::lastId = 0;
 
@@ -16,6 +14,6 @@ goap::Node::Node(const WorldState state, int _g, int _h, int _parenId, const Act
 	id = ++lastId;
 }
 
-/*bool goap::operator<(const goap::Node& left, const goap::Node right) {
-	return left.totalCost() < right.totalCost();
-}*/
+bool goap::operator<(const goap::Node& lhs, const goap::Node& rhs) {
+	return lhs.totalCost() < rhs.totalCost();
+}

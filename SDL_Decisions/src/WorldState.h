@@ -10,7 +10,7 @@ namespace goap {
 	{
 		float priority;//util per si es un estat objectiu, distingirlo daltres posibles objectius
 		string name;
-		map<int, bool> variablesMon;//conjunt de totes les varibalesEstat que desciru el estat del el nostre mon, mateix tipus que preconditions i efectes per poderlos comparar en accio
+		map<int, bool> variablesMon;//conjunt de totes les varibalesEstat que desciru el estat del el nostre mon
 
 		WorldState(const string name = "");
 
@@ -30,9 +30,9 @@ namespace goap {
 	};
 
 	//imprimeix tote les variables de worldState
-	inline ostream& operator<<(ostream& out, const WorldState& _States) {
+	inline ostream& operator<<(ostream& out, const WorldState& n) {
 		out << "WorldState { ";
-		for (const auto& i : _States.variablesMon) {
+		for (const auto& i : n.variablesMon) {
 			out << i.second << " ";
 		}
 		out << "}";

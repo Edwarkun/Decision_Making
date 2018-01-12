@@ -1,65 +1,117 @@
 #include<iostream>
 #include"Accio.h"
 #include"WorldState.h"
+#include"AlgoritmeEstrella.h"
 //tambe shauria dincloure el .h amb lalgoritme, aqui el node no, ya que sinclou en la del algoritme tmb
 #include<vector>
-#include <map>
+
 using namespace goap;
 using namespace std;
-/*void main() {
-	cout<< "PUTAS HARRY PUUUUUUUUUUUUTAS...\n";
+
+int main(void) {
+	cout<< "GOAP...\n";
 	vector<Action>actions;
 
 	//escribim els estats del mon
-	const int AgentViu = 1;
-	const int AgentTeArma = 2;
-	const int ArmaCarregada = 3;
+	const int AgentViu = 5;
+	const int AgentTeArma = 10;
+	const int ArmaCarregada = 15;
+	const int AgentTeBomba = 20;
+	const int EnemicVisible = 25;
+	const int EnemicAlineat = 30;
+	const int EnemicViu = 35;
+	const int EnemicAprop = 40;
 	
 	//definim les accions, ve lo pepino
 	Action explorar("ExplorarEnemics", 5);
-	explorar.setPrecondition(AgentViu, false);
-	explorar.setEffect(AgentViu, true);
+	explorar.setPrecondition(AgentViu, true);
+	explorar.setPrecondition(EnemicViu, true);
+	explorar.setPrecondition(EnemicVisible, false);
+	explorar.setEffect(EnemicVisible, true);
 	actions.push_back(explorar);
 
+	Action aproparse("AproparseToEnemic", 5);
+	aproparse.setPrecondition(EnemicViu, true);
+	aproparse.setPrecondition(EnemicVisible, true);
+	aproparse.setPrecondition(EnemicAprop, false);
+	aproparse.setEffect(EnemicAprop, true);
+	actions.push_back(aproparse);
+
+	Action apuntar("Apuntar", 5);
+	apuntar.setPrecondition(EnemicViu, true);
+	apuntar.setPrecondition(EnemicAprop, true);
+	apuntar.setPrecondition(AgentTeArma, true);
+	apuntar.setPrecondition(EnemicAlineat, false);
+	apuntar.setEffect(EnemicAlineat, true);
+	actions.push_back(apuntar);
+
+	Action disparar("Disparar", 5);;
+	disparar.setPrecondition(EnemicViu, true);
+	disparar.setPrecondition(ArmaCarregada, true);
+	disparar.setEffect(EnemicViu, false);
+	actions.push_back(disparar);
 
 	Action carregar("CarregarArma", 5);
 	carregar.setPrecondition(AgentTeArma, true);
 	carregar.setPrecondition(AgentViu, true);
+	carregar.setPrecondition(ArmaCarregada, false);
 	carregar.setEffect(ArmaCarregada, true);
 	actions.push_back(carregar);
 
-	Action pepe("pepeEsMajo", 5);
-	pepe.setPrecondition(AgentTeArma, false);
-	pepe.setEffect(AgentViu, false);
-	actions.push_back(pepe);
+	Action detonar("DetonarBomba", 5);
+	detonar.setPrecondition(AgentViu, true);
+	detonar.setPrecondition(AgentTeArma, false);
+	detonar.setPrecondition(AgentTeBomba, true);
+	detonar.setPrecondition(EnemicViu, true);
+	detonar.setPrecondition(EnemicAprop, true);
+	detonar.setEffect(AgentTeBomba, false);
+	detonar.setEffect(EnemicViu, false);
+	actions.push_back(detonar);
+
+	Action fugir("FugirDeEnemic", 6);
+	fugir.setPrecondition(AgentViu, true);
+	fugir.setPrecondition(EnemicViu, true);
+	fugir.setPrecondition(AgentTeArma, false);
+	fugir.setPrecondition(AgentTeBomba, false);
+	fugir.setPrecondition(EnemicAprop, true);
+	fugir.setEffect(EnemicAprop, false);
+	actions.push_back(fugir);
+
 
 	//estat inicial
 	WorldState estatInicial;
-	estatInicial.setVariablesMon(AgentViu, false);
+	estatInicial.setVariablesMon(AgentViu, true);
 	estatInicial.setVariablesMon(AgentTeArma, true);
 	estatInicial.setVariablesMon(ArmaCarregada, false);
+	estatInicial.setVariablesMon(AgentTeBomba, false);
+	estatInicial.setVariablesMon(EnemicVisible, false);
+	estatInicial.setVariablesMon(EnemicAlineat, false);
+	estatInicial.setVariablesMon(EnemicViu, true);
+	estatInicial.setVariablesMon(EnemicAprop, false);
 
 	//estat final
 	WorldState estatObjectiu;
 	estatObjectiu.setVariablesMon(AgentViu, true);
 	estatObjectiu.setVariablesMon(AgentTeArma, true);
-	estatObjectiu.setVariablesMon(ArmaCarregada, true);
-	estatObjectiu.priority = 50;
+	estatObjectiu.setVariablesMon(ArmaCarregada, false);
+	estatObjectiu.setVariablesMon(AgentTeBomba, false);
+	estatObjectiu.setVariablesMon(EnemicVisible, true);
+	estatObjectiu.setVariablesMon(EnemicAlineat, true);
+	estatObjectiu.setVariablesMon(EnemicAprop, true);
+	estatObjectiu.setVariablesMon(EnemicViu, false);
+	estatObjectiu.priority = 200;
 
-	for (auto it = 0; it < actions.size; it++) {
-		it = 
-	}
 
-}*/
-
-int main() {
-	std::vector<int> myvector(10);
-	bool a = false;
+	Planificador A;
 	try {
-		if(a == false)myvector.at(10);      // vector::at throws an out-of-range
+		vector<Action> thePlan = A.plan(estatInicial, estatObjectiu, actions);
+		cout << "Cami trobat\n";
+		for (vector<Action>::reverse_iterator rIt = thePlan.rbegin(); rIt != thePlan.rend(); ++rIt) {
+			cout << rIt->getNom() << endl;
+		}
 	}
-	catch (const out_of_range&) {
-	cout << "Out of Range error: " << '\n';
+	catch (const exception&) {
+		cout << "No, no sha torbat cami\n";
 	}
-	return 0;
+
 }

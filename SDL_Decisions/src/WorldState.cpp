@@ -1,4 +1,4 @@
-#include "WorldState.h";
+#include "WorldState.h"
 
 using namespace std;
 goap::WorldState::WorldState(const string _name) : priority(0), name(_name) {}

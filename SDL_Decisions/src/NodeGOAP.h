@@ -2,7 +2,6 @@
 
 #include"Accio.h"
 #include"WorldState.h"
-#include<ostream>
 
 using namespace std;
 
@@ -25,13 +24,16 @@ namespace goap {
 		//bool operator<(const Node& other);//mantindre els nodes ordenats
 
 		friend ostream& operator<<(ostream& out, const Node& n);
-	};
+	};  
 
-	bool operator<(const Node& left, const Node& right);
-
+	/*bool operator<(const Node& left, const Node& right) {
+		return left.totalCost() < right.totalCost();
+	};*/
+	bool operator<(const Node& lhs, const Node& rhs);
 	inline ostream& operator<<(ostream& out, const Node& n) {
 		out << "Node { id:" << n.id << " parent:" << n.parentId << " TotalCost:" << n.totalCost() << " G:" << n.g << " H:" << n.h;
 		out << ", " << n.ws << "}";
 		return out;
 	}
+
 }
